@@ -1,0 +1,16 @@
+version: 2.1
+
+orbs:
+  cyber4all: cyber4all/orb@1
+
+workflows:
+  integration-testing:
+    jobs:
+      - cyber4all/test-app:
+          docker-image: cimg/node:lts
+          isNode: true
+
+  production-deployment:
+    jobs:
+      # - cyber4all/publish-npm:
+

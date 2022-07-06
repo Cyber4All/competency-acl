@@ -1,4 +1,4 @@
-import { ACL_REGEX, competencyAcl } from "./competencyAcl";
+import { ACL_REGEX, competencyAcl } from "./const";
 import { ValidationError } from "./error";
 
 /**

@@ -1,4 +1,4 @@
-import { competencyAcl } from "../competencyAcl";
+import { competencyAcl } from "../const";
 import { validateAcl, validateAclArray } from "../validateAcl";
 
 const invalidAcls = {

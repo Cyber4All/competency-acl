@@ -1,0 +1,62 @@
+version: 2.1
+
+defaults: &defaults
+  working_directory: ~/competency-acl
+  docker:
+    - image: circleci/node:lts
+
+jobs:
+  build:
+    <<: *defaults
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: npm install
+      - run:
+          name: Build package
+          command: npm run build
+      - run:
+          name: Run tests
+          command: npm test
+      - persist_to_workspace:
+          root: ./
+          paths:
+            - ./package.json
+            - ./lib
+
+  publish:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/competency-acl
+      - run:
+          name: Expose NPM Key
+          command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/competency-acl/.npmrc
+      - run:
+          name: Publish to NPM
+          command: npm publish
+
+workflows:
+  build-and-test:
+    jobs:
+      - build:
+          filters:
+            branches:
+              ignore: /releases/
+  build-test-and-publish:
+    jobs:
+      - build:
+          filters:
+            branches:
+              only: /releases/
+            tags:
+              only: /v[0-9]+(\.[0-9]+)*/
+      - publish:
+          filters:
+            branches:
+              only: /releases/
+            tags:
+              only: /v[0-9]+(\.[0-9]+)*/
+
+

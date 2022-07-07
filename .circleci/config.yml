@@ -3,7 +3,7 @@ version: 2.1
 defaults: &defaults
   working_directory: ~/competency-acl
   docker:
-    - image: circleci/node:lts
+    - image: cimg/node:lts
 
 jobs:
   build:
@@ -53,10 +53,10 @@ workflows:
             tags:
               only: /v[0-9]+(\.[0-9]+)*/
       - publish:
+          requires:
+            - build
           filters:
             branches:
               only: /releases/
             tags:
               only: /v[0-9]+(\.[0-9]+)*/
-
-

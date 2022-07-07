@@ -23,8 +23,6 @@
     /* Emit */
     "outDir": "./lib",                                  /* Specify an output folder for all emitted files. */
 
-    /* Interop Constraints */
-    // "esModuleInterop": true,                            /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables 'allowSyntheticDefaultImports' for type compatibility. */
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "src/tests/**"]

@@ -61,6 +61,7 @@ export const competencyAcl = {
         get: `${userPrefix}:get`,
         updateAccount: `${userPrefix}:updateAccount`,
         updateAcl: `${userPrefix}:updateAcl`,
+        create: `${userPrefix}:create`
     },
     apiKey: {
         wildcard: `${apiKeyPrefix}:*`,

@@ -18,6 +18,7 @@ const competencyWildcard = [
     competencyAcl.competencies.getPublished,
     competencyAcl.competencies.getRejected,
     competencyAcl.competencies.getSubmitted,
+    competencyAcl.competencies.getDraft,
     competencyAcl.competencies.version
 ];
 
@@ -25,7 +26,8 @@ const competencyGetWildcard = [
     competencyAcl.competencies.getDeprecated,
     competencyAcl.competencies.getPublished,
     competencyAcl.competencies.getRejected,
-    competencyAcl.competencies.getSubmitted
+    competencyAcl.competencies.getSubmitted,
+    competencyAcl.competencies.getDraft
 ]
 
 describe("Validate Invalid Acls", () => {
@@ -90,7 +92,7 @@ describe("Validate Arrays of Acls", () => {
             competencyAcl.apiKey.create,
             competencyAcl.competencies.deleteDraft,
             competencyAcl.degree.updateDraft,
-            competencyAcl.user.get
+            competencyAcl.user.getProfile
         ];
         expect(new Set(validateAclArray(aclArray))).toEqual(new Set(aclArray));
     });

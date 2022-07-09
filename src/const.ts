@@ -16,6 +16,7 @@ export const competencyAcl = {
     competencies: {
         wildcard: `${competencyPrefix}:*`,
         getWildcard: `${competencyPrefix}:get*`,
+        getDraft: `${competencyPrefix}:getDraft`,
         getSubmitted: `${competencyPrefix}:getSubmitted`,
         getRejected: `${competencyPrefix}:getRejected`,
         getPublished: `${competencyPrefix}:getPublished`,
@@ -58,7 +59,8 @@ export const competencyAcl = {
     },
     user: {
         wildcard: `${userPrefix}:*`,
-        get: `${userPrefix}:get`,
+        getUsers: `${userPrefix}:getUsers`,
+        getProfile: `${userPrefix}:getProfile`,
         updateAccount: `${userPrefix}:updateAccount`,
         updateAcl: `${userPrefix}:updateAcl`,
         create: `${userPrefix}:create`
@@ -70,6 +72,7 @@ export const competencyAcl = {
         updateAcl: `${apiKeyPrefix}:updateAcl`
     },
     search: {
+        wildcard: `${searchPrefix}:*`,
         published: `${searchPrefix}:published`,
         rejected: `${searchPrefix}:rejected`,
         submitted: `${searchPrefix}:submitted`,
@@ -77,6 +80,7 @@ export const competencyAcl = {
         deprecated: `${searchPrefix}:deprecated`
     },
     lifecycle: {
+        wildcard: `${lifecyclePrefix}:wilcard`,
         deprecate: `${lifecyclePrefix}:deprecate`,
         submit: `${lifecyclePrefix}:submit`,
         cancelSubmission: `${lifecyclePrefix}:cancelSubmission`,
@@ -87,3 +91,21 @@ export const competencyAcl = {
     }
     
 };
+
+export const basic_user_permissions = [
+    competencyAcl.competencies.getWildcard,
+    competencyAcl.competencies.deleteDraft,
+    competencyAcl.competencies.create,
+    competencyAcl.audience.updateDraft,
+    competencyAcl.condition.updateDraft,
+    competencyAcl.documentation.uploadDraft,
+    competencyAcl.documentation.updateDraft,
+    competencyAcl.behavior.updateDraft,
+    competencyAcl.degree.updateDraft,
+    competencyAcl.effectiveness.updateDraft,
+    competencyAcl.user.getProfile,
+    competencyAcl.user.updateAccount,
+    competencyAcl.search.wildcard,
+    competencyAcl.lifecycle.submit,
+    competencyAcl.lifecycle.cancelSubmission
+];

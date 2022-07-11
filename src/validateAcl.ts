@@ -2,6 +2,96 @@ import { ACL_REGEX, competencyAcl } from "./const";
 import { ValidationError } from "./error";
 
 /**
+ * Validate an Array of acls
+ * @param acl A list of acls
+ * @returns An expanded list of acls
+ */
+export function validateAclArray(acl: string[]): string[] {
+    let fullAcl: string[] = [];
+    acl.forEach((anAcl) => {
+        const res = validateAcl(anAcl);
+        fullAcl = fullAcl.concat(res);
+    });
+    return fullAcl;
+}
+
+/**
+ * Validate an acl string
+ * @param acl The acl string to validate
+ * @returns A string array
+ * @throws ValidationError if the Acl string is not formatted correctly or the acl string is not in our system
+ */
+export function validateAcl(acl: string): string[] {
+    if (acl.match(ACL_REGEX) === null) {
+        throw new ValidationError("The ACL string is not formatted correctly");
+    }
+    const aclArray = acl.split(":");
+    const service = aclArray[0];
+    const module = aclArray[1];
+    const permission = aclArray[2];
+
+    switch(service) {
+        case "competency":
+            return validateCompetencyAcl(module, permission, acl);
+        default:
+            throw new ValidationError("Service does not exist");
+    }
+}
+
+/**
+ * Condense an array of permissions
+ * @param acl The acl array to condense down
+ */
+export function condenseAcl(acl: string[]): string[] {
+    // Validate list
+    acl = validateAclArray(acl);
+
+    let condensed: string[] = [];
+
+    // Check for full wildcards. ie competency:competencies:*
+    Object.entries(competencyAcl).forEach((value) => {
+        const module = value[0];
+        const permissions = Object.values(value[1]).filter((permission) => {
+            return !permission.includes("*");
+        });
+        
+        const hasAllModuleAcl = permissions.every((action) => {
+            return acl.includes(action);
+        });
+
+        if (hasAllModuleAcl) {
+            condensed.push(`competency:${module}:*`);
+            // Remove acls from the original list
+            acl = acl.filter((value) => !value.includes(module));
+        }
+    });
+
+    // Check for get wildcards. ie competency:competencies:get*
+    Object.entries(competencyAcl).forEach((value) => {
+        const module = value[0];
+        const getPermissions = Object.values(value[1]).filter((permission) => {
+            const action = permission.split(":")[2];
+            return action.startsWith("get") && !action.includes("*");
+        });
+        const hasAllGetAcls = getPermissions.length !== 0 && getPermissions.every((action) => acl.includes(action));
+
+        if (hasAllGetAcls && Object.keys(value[1]).includes("getWildcard")) {
+            condensed.push(`competency:${module}:get*`);
+            // Remove get acls from the original list
+            acl = acl.filter((value) => {
+                const brokenAcl = value.split(":");
+                return brokenAcl[1] !== module || !brokenAcl[2].startsWith("get");
+            });
+        }
+    });
+
+    // Add the permissions that did not get reduced to wildcards
+    condensed = condensed.concat(acl);
+
+    return condensed;
+}
+
+/**
  * Breaks down a given wildcard to the permissions that the wildcard encapsulates
  * @param module The module of the acl
  * @param permission The permission of the acl
@@ -44,44 +134,6 @@ function decomposeWildcard(module: string, permission: string, fullAcl?: string)
     }
     return expanded;
 }
-
-/**
- * Validate an Array of acls
- * @param acl A list of acls
- * @returns An expanded list of acls
- */
-export function validateAclArray(acl: string[]): string[] {
-    let fullAcl: string[] = [];
-    acl.forEach((anAcl) => {
-        const res = validateAcl(anAcl);
-        fullAcl = fullAcl.concat(res);
-    });
-    return fullAcl;
-}
-
-/**
- * Validate an acl string
- * @param acl The acl string to validate
- * @returns A string array
- * @throws ValidationError if the Acl string is not formatted correctly or the acl string is not in our system
- */
-export function validateAcl(acl: string): string[] {
-    if (acl.match(ACL_REGEX) === null) {
-        throw new ValidationError("The ACL string is not formatted correctly");
-    }
-    const aclArray = acl.split(":");
-    const service = aclArray[0];
-    const module = aclArray[1];
-    const permission = aclArray[2];
-
-    switch(service) {
-        case "competency":
-            return validateCompetencyAcl(module, permission, acl);
-        default:
-            throw new ValidationError("Service does not exist");
-    }
-}
-
 
 /**
  * Validates an acl within the competency service

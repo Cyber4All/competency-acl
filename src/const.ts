@@ -80,14 +80,13 @@ export const competencyAcl = {
         deprecated: `${searchPrefix}:deprecated`
     },
     lifecycle: {
-        wildcard: `${lifecyclePrefix}:wilcard`,
+        wildcard: `${lifecyclePrefix}:wildcard`,
         deprecate: `${lifecyclePrefix}:deprecate`,
         submit: `${lifecyclePrefix}:submit`,
         cancelSubmission: `${lifecyclePrefix}:cancelSubmission`,
         reject: `${lifecyclePrefix}:reject`,
         approve: `${lifecyclePrefix}:approve`,
         reviseRejected: `${lifecyclePrefix}:reviseRejected`
-
     }
     
 };

@@ -7,6 +7,7 @@ import { ValidationError } from "./error";
  * @returns An expanded list of acls
  */
 export function validateAclArray(acl: string[]): string[] {
+    acl = removeDuplicateAcls(acl);
     let fullAcl: string[] = [];
     acl.forEach((anAcl) => {
         const res = validateAcl(anAcl);
@@ -99,7 +100,7 @@ export function condenseAcl(acl: string[]): string[] {
  * @throws ValidationError if the module or permission are not valid
  */
 function decomposeWildcard(module: string, permission: string, fullAcl?: string): string[] {
-    let expanded: string[] = [];
+    const expanded: string[] = [];
 
     // Has all permissions in the module
     if (permission === "*") {
@@ -165,4 +166,13 @@ function validateCompetencyAcl(module: string, permission: string, fullAcl: stri
     }
 
     return aclList;
+}
+
+/**
+ * Remove all the duplicates from an acl array
+ * @param acl Acl list
+ * @returns An acl with potential duplicates removed
+ */
+function removeDuplicateAcls(acl: string[]): string[] {
+    return Array.from(new Set(acl));
 }

@@ -1,5 +1,5 @@
 import { competencyAcl } from "../const";
-import { validateAcl, validateAclArray } from "../validateAcl";
+import { condenseAcl, validateAcl, validateAclArray } from "../validateAcl";
 
 const invalidAcls = {
     containsNumbers: "notAvali:dacl1:*",
@@ -110,4 +110,68 @@ describe("Validate Arrays of Acls", () => {
             competencyAcl.search.rejected
         ])));
     });
-})
+});
+
+describe("Condense an Array of Acls", () => {
+    let aclArray: string[];
+    let correctArray: string[];
+    let additional: string[];
+
+    beforeEach(() => {
+        aclArray = [
+            competencyAcl.apiKey.create,
+            competencyAcl.apiKey.delete,
+            competencyAcl.apiKey.updateAcl,
+            competencyAcl.audience.updateDraft,
+            competencyAcl.audience.updateSubmitted,
+            competencyAcl.behavior.updateDraft,
+            competencyAcl.behavior.updateSubmitted
+        ];
+        correctArray = [
+            competencyAcl.apiKey.wildcard,
+            competencyAcl.audience.wildcard,
+            competencyAcl.behavior.wildcard
+        ];
+        additional = [
+            competencyAcl.lifecycle.approve,
+            competencyAcl.condition.updateDraft,
+            competencyAcl.competencies.create
+        ];
+    });
+
+    it("Should return a condensed array given a large array of acls", () => {
+        expect(new Set(condenseAcl(aclArray))).toEqual(new Set(correctArray));
+    });
+
+    it("Should return a partially condensed array given a large array of acls", () => {
+        expect(new Set(condenseAcl(aclArray.concat(additional)))).toEqual(new Set(correctArray.concat(additional)));
+    });
+
+    it("Should return the get wildcard from an array of get permissions", () => {
+        expect(new Set(condenseAcl(competencyGetWildcard))).toEqual(new Set([competencyAcl.competencies.getWildcard]));
+    });
+
+    it("Should return a get wilcard plus the other permissions", () => {
+        const newAcl = competencyGetWildcard.concat(additional);
+        expect(new Set(condenseAcl(newAcl))).toEqual(new Set([competencyAcl.competencies.getWildcard].concat(additional)));
+    });
+
+    it("Should return competency:competencies:* given all competencies permissions", () => {
+        expect(new Set(condenseAcl(competencyWildcard))).toEqual(new Set([competencyAcl.competencies.wildcard]));
+    });
+
+    it("Should return a the same array since it could not be condensed", () => {
+        const sameACL = [
+            competencyAcl.user.create,
+            competencyAcl.user.getProfile,
+            competencyAcl.user.getUsers,
+            competencyAcl.user.updateAccount,
+            competencyAcl.competencies.getPublished
+        ];
+        expect(new Set(condenseAcl(sameACL))).toEqual(new Set(sameACL));
+    });
+
+    it("Should thrown an error for a poorly formatted acl", () => {
+        expect(() => { return condenseAcl(["competency:helloThere"])}).toThrowError();
+    })
+});

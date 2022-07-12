@@ -1,4 +1,4 @@
-export const ACL_REGEX = /^[a-zA-Z]+:([a-zA-Z]+|[*]):(([a-zA-Z]+|[*])|([a-zA-Z]+[*]))$/
+export const ACL_REGEX = /^[a-zA-Z]+:[a-zA-Z]+:(([a-zA-Z]+|[*])|([a-zA-Z]+[*]))$/
 
 const competencyPrefix = "competency:competencies";
 const audiencePrefix = "competency:audience";

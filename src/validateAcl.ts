@@ -2,7 +2,8 @@ import { ACL_REGEX, competencyAcl } from "./const";
 import { ValidationError } from "./error";
 
 /**
- * Validate an Array of acls
+ * Validate an Array of acls by ensuring each acl matches the regex and is a valid action.
+ * The returned array will contain all duplicates removed and all wilcard acls expanded
  * @param acl A list of acls
  * @returns An expanded list of acls
  */
@@ -42,6 +43,7 @@ export function validateAcl(acl: string): string[] {
 /**
  * Condense an array of permissions
  * @param acl The acl array to condense down
+ * @returns A string of acls where acls were removed and replaced with a wildcard
  */
 export function condenseAcl(acl: string[]): string[] {
     // Validate list

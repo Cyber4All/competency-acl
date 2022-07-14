@@ -2,11 +2,13 @@ import { ACL_REGEX, competencyAcl } from "./const";
 import { ValidationError } from "./error";
 
 /**
- * Validate an Array of acls
+ * Validate an Array of acls by ensuring each acl matches the regex and is a valid action.
+ * The returned array will contain all duplicates removed and all wilcard acls expanded
  * @param acl A list of acls
  * @returns An expanded list of acls
  */
 export function validateAclArray(acl: string[]): string[] {
+    acl = removeDuplicateAcls(acl);
     let fullAcl: string[] = [];
     acl.forEach((anAcl) => {
         const res = validateAcl(anAcl);
@@ -41,6 +43,7 @@ export function validateAcl(acl: string): string[] {
 /**
  * Condense an array of permissions
  * @param acl The acl array to condense down
+ * @returns A string of acls where acls were removed and replaced with a wildcard
  */
 export function condenseAcl(acl: string[]): string[] {
     // Validate list
@@ -99,7 +102,7 @@ export function condenseAcl(acl: string[]): string[] {
  * @throws ValidationError if the module or permission are not valid
  */
 function decomposeWildcard(module: string, permission: string, fullAcl?: string): string[] {
-    let expanded: string[] = [];
+    const expanded: string[] = [];
 
     // Has all permissions in the module
     if (permission === "*") {
@@ -165,4 +168,13 @@ function validateCompetencyAcl(module: string, permission: string, fullAcl: stri
     }
 
     return aclList;
+}
+
+/**
+ * Remove all the duplicates from an acl array
+ * @param acl Acl list
+ * @returns An acl with potential duplicates removed
+ */
+function removeDuplicateAcls(acl: string[]): string[] {
+    return Array.from(new Set(acl));
 }

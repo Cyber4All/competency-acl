@@ -12,7 +12,7 @@ jobs:
       - checkout
       - run:
           name: Install dependencies
-          command: npm install
+          command: npm set-script prepare "" && npm install
       - run:
           name: Build package
           command: npm run build

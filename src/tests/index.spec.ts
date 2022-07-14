@@ -79,7 +79,7 @@ describe("Validate Valid Acls", () => {
 });
 
 describe("Validate Arrays of Acls", () => {
-    it(`Should throw an error because the array contains an invalid acl`, () => {
+    it("Should throw an error because the array contains an invalid acl", () => {
         expect(() => validateAclArray([
             competencyAcl.apiKey.create,
             competencyAcl.competencies.create,
@@ -87,7 +87,7 @@ describe("Validate Arrays of Acls", () => {
             "competency:competencies:HelloThere"
         ])).toThrowError();
     });
-    it(`Should return an array that matches the array given`, () => {
+    it("Should return an array that matches the array given", () => {
         const aclArray = [
             competencyAcl.apiKey.create,
             competencyAcl.competencies.deleteDraft,
@@ -96,7 +96,7 @@ describe("Validate Arrays of Acls", () => {
         ];
         expect(new Set(validateAclArray(aclArray))).toEqual(new Set(aclArray));
     });
-    it(`Should return an array that expands wildcards`, () => {
+    it("Should return an array that expands wildcards", () => {
         const aclArray = [
             competencyAcl.competencies.getWildcard,
             competencyAcl.audience.wildcard,
@@ -110,6 +110,22 @@ describe("Validate Arrays of Acls", () => {
             competencyAcl.search.rejected
         ])));
     });
+    it("Should return an array with duplicates removed", () => {
+        const duplicates = [
+            competencyAcl.competencies.create,
+            competencyAcl.competencies.create,
+            competencyAcl.apiKey.create,
+            competencyAcl.apiKey.create,
+            competencyAcl.behavior.updateDraft,
+            competencyAcl.behavior.updateDraft,
+        ];
+        const correct = [
+            competencyAcl.competencies.create,
+            competencyAcl.apiKey.create,
+            competencyAcl.behavior.updateDraft
+        ];
+        expect(validateAclArray(duplicates).sort()).toEqual(correct.sort());
+    })
 });
 
 describe("Condense an Array of Acls", () => {

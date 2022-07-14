@@ -1,94 +1,98 @@
 export const ACL_REGEX = /^[a-zA-Z]+:[a-zA-Z]+:(([a-zA-Z]+|[*])|([a-zA-Z]+[*]))$/
 
-const competencyService = "competency";
+enum SERVICES {
+    competency = "competency",
+}
 
-const competenciesModule = "competencies";
-const audienceModule = "audience";
-const conditionModule = "condition";
-const documentationModule = "documentation";
-const behaviorModule = "behavior";
-const degreeModule = "degree";
-const effectivenessModule = "effectiveness";
-const userModule = "user";
-const apiKeyModule = "apiKey";
-const searchModule = "search";
-const lifecycleModule = "lifecycle";
+enum MODULES {
+    competencies = "competencies",
+    audience = "audience",
+    condition = "condition",
+    documentation = "documentation",
+    behavior = "behavior",
+    degree = "degree",
+    effectiveness = "effectiveness",
+    user = "user",
+    apiKey = "apiKey",
+    search = "search",
+    lifecycle = "lifecycle",
+}
 
 export const competencyAcl = {
     competencies: {
-        wildcard: `${competencyService}:${competenciesModule}:*`,
-        getWildcard: `${competencyService}:${competenciesModule}:get*`,
-        getDraft: `${competencyService}:${competenciesModule}:getDraft`,
-        getSubmitted: `${competencyService}:${competenciesModule}:getSubmitted`,
-        getRejected: `${competencyService}:${competenciesModule}:getRejected`,
-        getPublished: `${competencyService}:${competenciesModule}:getPublished`,
-        getDeprecated: `${competencyService}:${competenciesModule}:getDeprecated`,
-        deleteDraft: `${competencyService}:${competenciesModule}:deleteDraft`,
-        create: `${competencyService}:${competenciesModule}:create`,
-        version: `${competencyService}:${competenciesModule}:version`,
+        wildcard: `${SERVICES.competency}:${MODULES.competencies}:*`,
+        getWildcard: `${SERVICES.competency}:${MODULES.competencies}:get*`,
+        getDraft: `${SERVICES.competency}:${MODULES.competencies}:getDraft`,
+        getSubmitted: `${SERVICES.competency}:${MODULES.competencies}:getSubmitted`,
+        getRejected: `${SERVICES.competency}:${MODULES.competencies}:getRejected`,
+        getPublished: `${SERVICES.competency}:${MODULES.competencies}:getPublished`,
+        getDeprecated: `${SERVICES.competency}:${MODULES.competencies}:getDeprecated`,
+        deleteDraft: `${SERVICES.competency}:${MODULES.competencies}:deleteDraft`,
+        create: `${SERVICES.competency}:${MODULES.competencies}:create`,
+        version: `${SERVICES.competency}:${MODULES.competencies}:version`,
     },
     audience: {
-        wildcard: `${competencyService}:${audienceModule}:*`,
-        updateDraft: `${competencyService}:${audienceModule}:updateDraft`,
-        updateSubmitted: `${competencyService}:${audienceModule}:updateSubmitted`
+        wildcard: `${SERVICES.competency}:${MODULES.audience}:*`,
+        updateDraft: `${SERVICES.competency}:${MODULES.audience}:updateDraft`,
+        updateSubmitted: `${SERVICES.competency}:${MODULES.audience}:updateSubmitted`
     },
     condition: {
-        wildcard: `${competencyService}:${conditionModule}:*`,
-        updateDraft: `${competencyService}:${conditionModule}:updateDraft`,
-        updateSubmitted: `${competencyService}:${conditionModule}:updateSubmitted`
+        wildcard: `${SERVICES.competency}:${MODULES.condition}:*`,
+        updateDraft: `${SERVICES.competency}:${MODULES.condition}:updateDraft`,
+        updateSubmitted: `${SERVICES.competency}:${MODULES.condition}:updateSubmitted`
     },
     documentation: {
-        wildcard: `${competencyService}:${documentationModule}:*`,
-        uploadDraft: `${competencyService}:${documentationModule}:uploadDraft`,
-        uploadSubmitted: `${competencyService}:${documentationModule}:uploadSubmitted`,
-        updateDraft: `${competencyService}:${documentationModule}:updateDraft`,
-        updateSubmitted: `${competencyService}:${documentationModule}:updateSubmitted`
+        wildcard: `${SERVICES.competency}:${MODULES.documentation}:*`,
+        uploadDraft: `${SERVICES.competency}:${MODULES.documentation}:uploadDraft`,
+        uploadSubmitted: `${SERVICES.competency}:${MODULES.documentation}:uploadSubmitted`,
+        updateDraft: `${SERVICES.competency}:${MODULES.documentation}:updateDraft`,
+        updateSubmitted: `${SERVICES.competency}:${MODULES.documentation}:updateSubmitted`
     },
     behavior: {
-        wildcard: `${competencyService}:${behaviorModule}:*`,
-        updateDraft: `${competencyService}:${behaviorModule}:updateDraft`,
-        updateSubmitted: `${competencyService}:${behaviorModule}:updateSubmitted`
+        wildcard: `${SERVICES.competency}:${MODULES.behavior}:*`,
+        updateDraft: `${SERVICES.competency}:${MODULES.behavior}:updateDraft`,
+        updateSubmitted: `${SERVICES.competency}:${MODULES.behavior}:updateSubmitted`
     },
     degree: {
-        wildcard: `${competencyService}:${degreeModule}:*`,
-        updateDraft: `${competencyService}:${degreeModule}:updateDraft`,
-        updateSubmitted: `${competencyService}:${degreeModule}:updateSubmitted`
+        wildcard: `${SERVICES.competency}:${MODULES.degree}:*`,
+        updateDraft: `${SERVICES.competency}:${MODULES.degree}:updateDraft`,
+        updateSubmitted: `${SERVICES.competency}:${MODULES.degree}:updateSubmitted`
     },
     effectiveness: {
-        wildcard: `${competencyService}:${effectivenessModule}:*`,
-        updateDraft: `${competencyService}:${effectivenessModule}:updateDraft`,
-        updateSubmitted: `${competencyService}:${effectivenessModule}:updateSubmitted`
+        wildcard: `${SERVICES.competency}:${MODULES.effectiveness}:*`,
+        updateDraft: `${SERVICES.competency}:${MODULES.effectiveness}:updateDraft`,
+        updateSubmitted: `${SERVICES.competency}:${MODULES.effectiveness}:updateSubmitted`
     },
     user: {
-        wildcard: `${competencyService}:${userModule}:*`,
-        getUsers: `${competencyService}:${userModule}:getUsers`,
-        getProfile: `${competencyService}:${userModule}:getProfile`,
-        updateAccount: `${competencyService}:${userModule}:updateAccount`,
-        updateAcl: `${competencyService}:${userModule}:updateAcl`,
-        create: `${competencyService}:${userModule}:create`
+        wildcard: `${SERVICES.competency}:${MODULES.user}:*`,
+        getUsers: `${SERVICES.competency}:${MODULES.user}:getUsers`,
+        getProfile: `${SERVICES.competency}:${MODULES.user}:getProfile`,
+        updateAccount: `${SERVICES.competency}:${MODULES.user}:updateAccount`,
+        updateAcl: `${SERVICES.competency}:${MODULES.user}:updateAcl`,
+        create: `${SERVICES.competency}:${MODULES.user}:create`
     },
     apiKey: {
-        wildcard: `${competencyService}:${apiKeyModule}:*`,
-        create: `${competencyService}:${apiKeyModule}:create`,
-        delete: `${competencyService}:${apiKeyModule}:delete`,
-        updateAcl: `${competencyService}:${apiKeyModule}:updateAcl`
+        wildcard: `${SERVICES.competency}:${MODULES.apiKey}:*`,
+        create: `${SERVICES.competency}:${MODULES.apiKey}:create`,
+        delete: `${SERVICES.competency}:${MODULES.apiKey}:delete`,
+        updateAcl: `${SERVICES.competency}:${MODULES.apiKey}:updateAcl`
     },
     search: {
-        wildcard: `${competencyService}:${searchModule}:*`,
-        published: `${competencyService}:${searchModule}:published`,
-        rejected: `${competencyService}:${searchModule}:rejected`,
-        submitted: `${competencyService}:${searchModule}:submitted`,
-        draft: `${competencyService}:${searchModule}:draft`,
-        deprecated: `${competencyService}:${searchModule}:deprecated`
+        wildcard: `${SERVICES.competency}:${MODULES.search}:*`,
+        published: `${SERVICES.competency}:${MODULES.search}:published`,
+        rejected: `${SERVICES.competency}:${MODULES.search}:rejected`,
+        submitted: `${SERVICES.competency}:${MODULES.search}:submitted`,
+        draft: `${SERVICES.competency}:${MODULES.search}:draft`,
+        deprecated: `${SERVICES.competency}:${MODULES.search}:deprecated`
     },
     lifecycle: {
-        wildcard: `${competencyService}:${lifecycleModule}:wildcard`,
-        deprecate: `${competencyService}:${lifecycleModule}:deprecate`,
-        submit: `${competencyService}:${lifecycleModule}:submit`,
-        cancelSubmission: `${competencyService}:${lifecycleModule}:cancelSubmission`,
-        reject: `${competencyService}:${lifecycleModule}:reject`,
-        approve: `${competencyService}:${lifecycleModule}:approve`,
-        reviseRejected: `${competencyService}:${lifecycleModule}:reviseRejected`
+        wildcard: `${SERVICES.competency}:${MODULES.lifecycle}:wildcard`,
+        deprecate: `${SERVICES.competency}:${MODULES.lifecycle}:deprecate`,
+        submit: `${SERVICES.competency}:${MODULES.lifecycle}:submit`,
+        cancelSubmission: `${SERVICES.competency}:${MODULES.lifecycle}:cancelSubmission`,
+        reject: `${SERVICES.competency}:${MODULES.lifecycle}:reject`,
+        approve: `${SERVICES.competency}:${MODULES.lifecycle}:approve`,
+        reviseRejected: `${SERVICES.competency}:${MODULES.lifecycle}:reviseRejected`
     }
     
 };

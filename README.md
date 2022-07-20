@@ -95,7 +95,7 @@ In the current version of the competency api, there are no microservices. Which 
 
 | Action | Description |
 | ------ | ----------- |
-| competency: :* | Wilcard for the Audience Module |
+| competency:audience:* | Wilcard for the Audience Module |
 | competency:audience:updateDraft | Update the audience field of a draft competency |
 | competency:audience:updateSubmitted | Update the audience field of a submitted competency |
 ### Condition Module

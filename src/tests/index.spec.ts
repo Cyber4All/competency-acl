@@ -125,7 +125,10 @@ describe("Validate Arrays of Acls", () => {
             competencyAcl.behavior.updateDraft
         ];
         expect(validateAclArray(duplicates).sort()).toEqual(correct.sort());
-    })
+    });
+    it("Should return an empty array given an empty array", () => {
+        expect(validateAclArray([])).toEqual([]);
+    });
 });
 
 describe("Condense an Array of Acls", () => {

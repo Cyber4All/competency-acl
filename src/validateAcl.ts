@@ -176,5 +176,5 @@ function validateCompetencyAcl(module: string, permission: string, fullAcl: stri
  * @returns An acl with potential duplicates removed
  */
 function removeDuplicateAcls(acl: string[]): string[] {
-    return Array.from(new Set(acl));
+    return acl.length !== 0 ? Array.from(new Set(acl)) : [];
 }

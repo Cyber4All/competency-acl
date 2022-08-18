@@ -19,7 +19,8 @@ const competencyWildcard = [
     competencyAcl.competencies.getRejected,
     competencyAcl.competencies.getSubmitted,
     competencyAcl.competencies.getDraft,
-    competencyAcl.competencies.version
+    competencyAcl.competencies.version,
+    competencyAcl.competencies.reviewSubmitted
 ];
 
 const competencyGetWildcard = [

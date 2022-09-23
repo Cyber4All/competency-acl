@@ -17,7 +17,7 @@
     - [Documentation Module](#documentation-module)
     - [Behavior Module](#behavior-module)
     - [Degree Module](#degree-module)
-    - [Effectiveness Module](#effectiveness-module)
+    - [Employability Module](#employability-module)
     - [User Module](#user-module)
     - [ApiKey Module](#apikey-module)
     - [Search Module](#search-module)
@@ -129,13 +129,13 @@ In the current version of the competency api, there are no microservices. Which 
 | competency:degree:* | Wilcard for the Degree Module |
 | competency:degree:updateDraft | Update the degree field of a draft competency |
 | competency:degree:updateSubmitted | Update the degree field of a submitted competency |
-### Effectiveness Module
+### Employability Module
 
 | Action | Description |
 | ------ | ----------- |
-| competency:effectiveness:* | Wilcard for the Effectiveness Module |
-| competency:effectiveness:updateDraft | Update the effectiveness field of a draft competency |
-| competency:effectiveness:updateSubmitted | Update the effectiveness field of a submitted competency |
+| competency:employability:* | Wilcard for the Employability Module |
+| competency:employability:updateDraft | Update the employability field of a draft competency |
+| competency:employability:updateSubmitted | Update the employability field of a submitted competency |
 ### User Module
 
 | Action | Description |

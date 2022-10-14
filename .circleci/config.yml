@@ -66,4 +66,3 @@ workflows:
             branches:
               only:
                 - releases
-                - chore/sc-14941/add-sbom-on-releases

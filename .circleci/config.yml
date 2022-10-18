@@ -5,6 +5,9 @@ defaults: &defaults
   docker:
     - image: cimg/node:lts
 
+orbs:
+  cyber4all: cyber4all/orb@1
+
 jobs:
   build:
     <<: *defaults
@@ -56,3 +59,10 @@ workflows:
           filters:
             branches:
               only: /releases/
+      - cyber4all/sbom:
+          context: [Shortcut]
+          language: node
+          filters:
+            branches:
+              only:
+                - releases

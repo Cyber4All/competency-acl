@@ -12,6 +12,7 @@ enum MODULES {
     behavior = "behavior",
     degree = "degree",
     employability = "employability",
+    notes = "notes",
     user = "user",
     apiKey = "apiKey",
     search = "search",
@@ -64,6 +65,11 @@ export const competencyAcl = {
         updateDraft: `${SERVICES.competency}:${MODULES.employability}:updateDraft`,
         updateSubmitted: `${SERVICES.competency}:${MODULES.employability}:updateSubmitted`
     },
+    notes: {
+        wildcard: `${SERVICES.competency}:${MODULES.notes}:*`,
+        updateDraft: `${SERVICES.competency}:${MODULES.notes}:updateDraft`,
+        updateSubmitted: `${SERVICES.competency}:${MODULES.notes}:updateSubmitted`
+    },
     user: {
         wildcard: `${SERVICES.competency}:${MODULES.user}:*`,
         getUsers: `${SERVICES.competency}:${MODULES.user}:getUsers`,
@@ -109,6 +115,7 @@ export const basic_user_permissions = [
     competencyAcl.behavior.updateDraft,
     competencyAcl.degree.updateDraft,
     competencyAcl.employability.updateDraft,
+    competencyAcl.notes.updateDraft,
     competencyAcl.user.getProfile,
     competencyAcl.user.updateAccount,
     competencyAcl.search.wildcard,

@@ -1,6 +1,6 @@
 {
   "name": "competency-acl",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/Cyber4All/competency-acl#readme",
   "devDependencies": {
-    "@types/jest": "^28.1.4",
+    "@types/jest": "^28.1.8",
     "@typescript-eslint/eslint-plugin": "^5.30.6",
     "eslint": "^8.19.0",
     "husky": "^8.0.1",

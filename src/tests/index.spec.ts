@@ -8,7 +8,7 @@ const invalidAcls = {
     incorrectCompAction: "competency:competencies:getAll",
     incorrectModule: "competency:services:get*",
     incorrectService: "hello:competencies:get*",
-    incorrectAudienceAction: "competency:audience:getAll",
+    incorrectActorAction: "competency:actor:getAll",
 }
 
 const competencyWildcard = [
@@ -56,8 +56,8 @@ describe("Validate Invalid Acls", () => {
         expect(() => validateAcl(invalidAcls.incorrectService)).toThrowError();
     });
 
-    it(`Should throw an error because ${invalidAcls.incorrectAudienceAction} has an incorrect action`, () => {
-        expect(() => validateAcl(invalidAcls.incorrectAudienceAction)).toThrowError();
+    it(`Should throw an error because ${invalidAcls.incorrectActorAction} has an incorrect action`, () => {
+        expect(() => validateAcl(invalidAcls.incorrectActorAction)).toThrowError();
     })
 });
 
@@ -65,10 +65,10 @@ describe("Validate Valid Acls", () => {
     it(`Should return an array for ${competencyAcl.competencies.create}`, () => {
         expect(validateAcl(competencyAcl.competencies.create)).toEqual([competencyAcl.competencies.create]);
     });
-    it(`Should return an array for ${competencyAcl.audience.wildcard}`, () => {
-        expect(new Set(validateAcl(competencyAcl.audience.wildcard))).toEqual(new Set([
-            competencyAcl.audience.updateDraft,
-            competencyAcl.audience.updateSubmitted
+    it(`Should return an array for ${competencyAcl.actor.wildcard}`, () => {
+        expect(new Set(validateAcl(competencyAcl.actor.wildcard))).toEqual(new Set([
+            competencyAcl.actor.updateDraft,
+            competencyAcl.actor.updateSubmitted
         ]));
     });
     it(`Should return an array for ${competencyAcl.competencies.wildcard}`, () => {
@@ -100,13 +100,13 @@ describe("Validate Arrays of Acls", () => {
     it("Should return an array that expands wildcards", () => {
         const aclArray = [
             competencyAcl.competencies.getWildcard,
-            competencyAcl.audience.wildcard,
+            competencyAcl.actor.wildcard,
             competencyAcl.condition.updateDraft,
             competencyAcl.search.rejected
         ];
         expect(new Set(validateAclArray(aclArray))).toEqual(new Set(competencyGetWildcard.concat([
-            competencyAcl.audience.updateDraft, 
-            competencyAcl.audience.updateSubmitted,
+            competencyAcl.actor.updateDraft, 
+            competencyAcl.actor.updateSubmitted,
             competencyAcl.condition.updateDraft,
             competencyAcl.search.rejected
         ])));
@@ -142,14 +142,14 @@ describe("Condense an Array of Acls", () => {
             competencyAcl.apiKey.create,
             competencyAcl.apiKey.delete,
             competencyAcl.apiKey.updateAcl,
-            competencyAcl.audience.updateDraft,
-            competencyAcl.audience.updateSubmitted,
+            competencyAcl.actor.updateDraft,
+            competencyAcl.actor.updateSubmitted,
             competencyAcl.behavior.updateDraft,
             competencyAcl.behavior.updateSubmitted
         ];
         correctArray = [
             competencyAcl.apiKey.wildcard,
-            competencyAcl.audience.wildcard,
+            competencyAcl.actor.wildcard,
             competencyAcl.behavior.wildcard
         ];
         additional = [

@@ -12,7 +12,7 @@
 - [Actions](#actions)
   - [Competency Service](#competency-service)
     - [Competencies Module](#competencies-module)
-    - [Audience Module](#audience-module)
+    - [Actor Module](#actor-module)
     - [Condition Module](#condition-module)
     - [Documentation Module](#documentation-module)
     - [Behavior Module](#behavior-module)
@@ -91,13 +91,13 @@ In the current version of the competency api, there are no microservices. Which 
 | competency:competencies:create | Create a competency |
 | competency:competencies:version | Version a competency |
 
-### Audience Module
+### Actor Module
 
 | Action | Description |
 | ------ | ----------- |
-| competency:audience:* | Wilcard for the Audience Module |
-| competency:audience:updateDraft | Update the audience field of a draft competency |
-| competency:audience:updateSubmitted | Update the audience field of a submitted competency |
+| competency:actor:* | Wilcard for the Actor Module |
+| competency:actor:updateDraft | Update the actor field of a draft competency |
+| competency:actor:updateSubmitted | Update the actor field of a submitted competency |
 ### Condition Module
 
 | Action | Description |

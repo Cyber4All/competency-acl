@@ -6,7 +6,7 @@ enum SERVICES {
 
 enum MODULES {
     competencies = "competencies",
-    audience = "audience",
+    actor = "actor",
     condition = "condition",
     documentation = "documentation",
     behavior = "behavior",
@@ -33,10 +33,10 @@ export const competencyAcl = {
         create: `${SERVICES.competency}:${MODULES.competencies}:create`,
         version: `${SERVICES.competency}:${MODULES.competencies}:version`,
     },
-    audience: {
-        wildcard: `${SERVICES.competency}:${MODULES.audience}:*`,
-        updateDraft: `${SERVICES.competency}:${MODULES.audience}:updateDraft`,
-        updateSubmitted: `${SERVICES.competency}:${MODULES.audience}:updateSubmitted`
+    actor: {
+        wildcard: `${SERVICES.competency}:${MODULES.actor}:*`,
+        updateDraft: `${SERVICES.competency}:${MODULES.actor}:updateDraft`,
+        updateSubmitted: `${SERVICES.competency}:${MODULES.actor}:updateSubmitted`
     },
     condition: {
         wildcard: `${SERVICES.competency}:${MODULES.condition}:*`,
@@ -108,7 +108,7 @@ export const basic_user_permissions = [
     competencyAcl.competencies.getWildcard,
     competencyAcl.competencies.deleteDraft,
     competencyAcl.competencies.create,
-    competencyAcl.audience.updateDraft,
+    competencyAcl.actor.updateDraft,
     competencyAcl.condition.updateDraft,
     competencyAcl.documentation.uploadDraft,
     competencyAcl.documentation.updateDraft,

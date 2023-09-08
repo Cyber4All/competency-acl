@@ -8,13 +8,13 @@ import { ValidationError } from "./error";
  * @returns An expanded list of acls
  */
 export function validateAclArray(acl: string[]): string[] {
-    acl = removeDuplicateAcls(acl);
-    let fullAcl: string[] = [];
-    acl.forEach((anAcl) => {
-        const res = validateAcl(anAcl);
-        fullAcl = fullAcl.concat(res);
-    });
-    return fullAcl;
+	acl = removeDuplicateAcls(acl);
+	let fullAcl: string[] = [];
+	acl.forEach((anAcl) => {
+		const res = validateAcl(anAcl);
+		fullAcl = fullAcl.concat(res);
+	});
+	return fullAcl;
 }
 
 /**
@@ -24,20 +24,20 @@ export function validateAclArray(acl: string[]): string[] {
  * @throws ValidationError if the Acl string is not formatted correctly or the acl string is not in our system
  */
 export function validateAcl(acl: string): string[] {
-    if (acl.match(ACL_REGEX) === null) {
-        throw new ValidationError("The ACL string is not formatted correctly");
-    }
-    const aclArray = acl.split(":");
-    const service = aclArray[0];
-    const module = aclArray[1];
-    const permission = aclArray[2];
+	if (acl.match(ACL_REGEX) === null) {
+		throw new ValidationError("The ACL string is not formatted correctly");
+	}
+	const aclArray = acl.split(":");
+	const service = aclArray[0];
+	const module = aclArray[1];
+	const permission = aclArray[2];
 
-    switch(service) {
-        case "competency":
-            return validateCompetencyAcl(module, permission, acl);
-        default:
-            throw new ValidationError("Service does not exist");
-    }
+	switch (service) {
+		case "competency":
+			return validateCompetencyAcl(module, permission, acl);
+		default:
+			throw new ValidationError("Service does not exist");
+	}
 }
 
 /**
@@ -46,52 +46,54 @@ export function validateAcl(acl: string): string[] {
  * @returns A string of acls where acls were removed and replaced with a wildcard
  */
 export function condenseAcl(acl: string[]): string[] {
-    // Validate list
-    acl = validateAclArray(acl);
+	// Validate list
+	acl = validateAclArray(acl);
 
-    let condensed: string[] = [];
+	let condensed: string[] = [];
 
-    // Check for full wildcards. ie competency:competencies:*
-    Object.entries(competencyAcl).forEach((value) => {
-        const module = value[0];
-        const permissions = Object.values(value[1]).filter((permission) => {
-            return !permission.includes("*");
-        });
-        
-        const hasAllModuleAcl = permissions.every((action) => {
-            return acl.includes(action);
-        });
+	// Check for full wildcards. ie competency:competencies:*
+	Object.entries(competencyAcl).forEach((value) => {
+		const module = value[0];
+		const permissions = Object.values(value[1]).filter((permission) => {
+			return !permission.includes("*");
+		});
 
-        if (hasAllModuleAcl) {
-            condensed.push(`competency:${module}:*`);
-            // Remove acls from the original list
-            acl = acl.filter((value) => !value.includes(module));
-        }
-    });
+		const hasAllModuleAcl = permissions.every((action) => {
+			return acl.includes(action);
+		});
 
-    // Check for get wildcards. ie competency:competencies:get*
-    Object.entries(competencyAcl).forEach((value) => {
-        const module = value[0];
-        const getPermissions = Object.values(value[1]).filter((permission) => {
-            const action = permission.split(":")[2];
-            return action.startsWith("get") && !action.includes("*");
-        });
-        const hasAllGetAcls = getPermissions.length !== 0 && getPermissions.every((action) => acl.includes(action));
+		if (hasAllModuleAcl) {
+			condensed.push(`competency:${module}:*`);
+			// Remove acls from the original list
+			acl = acl.filter((value) => !value.includes(module));
+		}
+	});
 
-        if (hasAllGetAcls && Object.keys(value[1]).includes("getWildcard")) {
-            condensed.push(`competency:${module}:get*`);
-            // Remove get acls from the original list
-            acl = acl.filter((value) => {
-                const brokenAcl = value.split(":");
-                return brokenAcl[1] !== module || !brokenAcl[2].startsWith("get");
-            });
-        }
-    });
+	// Check for get wildcards. ie competency:competencies:get*
+	Object.entries(competencyAcl).forEach((value) => {
+		const module = value[0];
+		const getPermissions = Object.values(value[1]).filter((permission) => {
+			const action = permission.split(":")[2];
+			return action.startsWith("get") && !action.includes("*");
+		});
+		const hasAllGetAcls =
+			getPermissions.length !== 0 &&
+			getPermissions.every((action) => acl.includes(action));
 
-    // Add the permissions that did not get reduced to wildcards
-    condensed = condensed.concat(acl);
+		if (hasAllGetAcls && Object.keys(value[1]).includes("getWildcard")) {
+			condensed.push(`competency:${module}:get*`);
+			// Remove get acls from the original list
+			acl = acl.filter((value) => {
+				const brokenAcl = value.split(":");
+				return brokenAcl[1] !== module || !brokenAcl[2].startsWith("get");
+			});
+		}
+	});
 
-    return condensed;
+	// Add the permissions that did not get reduced to wildcards
+	condensed = condensed.concat(acl);
+
+	return condensed;
 }
 
 /**
@@ -101,41 +103,47 @@ export function condenseAcl(acl: string[]): string[] {
  * @returns A string array of the permissions that the wildcard contains
  * @throws ValidationError if the module or permission are not valid
  */
-function decomposeWildcard(module: string, permission: string, fullAcl?: string): string[] {
-    const expanded: string[] = [];
+function decomposeWildcard(
+	module: string,
+	permission: string,
+	fullAcl?: string
+): string[] {
+	const expanded: string[] = [];
 
-    // Has all permissions in the module
-    if (permission === "*") {
-        Object.entries(competencyAcl).forEach((value) => {
-            if (value[0] === module) {
-                Object.values(value[1]).forEach((acl) => {
-                    if (!acl.includes("*")) {
-                        expanded.push(acl);
-                    }
-                });
-            }
-        });
-    } else if (permission.endsWith("*")) {
-        const prefix = permission.slice(0, permission.length -1);
-        Object.entries(competencyAcl).forEach((value) => {
-            const aModule = value[0];
-            if (aModule === module) {
-                Object.entries(value[1]).forEach((acl) => {
-                    const key = acl[0];
-                    const value = acl[1];
-                    if (key.startsWith(prefix) && !value.includes("*")) {
-                        expanded.push(value);
-                    }
-                });
-            }
-        });
-    }
+	// Has all permissions in the module
+	if (permission === "*") {
+		Object.entries(competencyAcl).forEach((value) => {
+			if (value[0] === module) {
+				Object.values(value[1]).forEach((acl) => {
+					if (!acl.includes("*")) {
+						expanded.push(acl);
+					}
+				});
+			}
+		});
+	} else if (permission.endsWith("*")) {
+		const prefix = permission.slice(0, permission.length - 1);
+		Object.entries(competencyAcl).forEach((value) => {
+			const aModule = value[0];
+			if (aModule === module) {
+				Object.entries(value[1]).forEach((acl) => {
+					const key = acl[0];
+					const value = acl[1];
+					if (key.startsWith(prefix) && !value.includes("*")) {
+						expanded.push(value);
+					}
+				});
+			}
+		});
+	}
 
-    if (expanded.length === 0) {
-        const msg = fullAcl ? `${fullAcl} is not a valid acl` : `${module} or ${permission} are not valid`;
-        throw new ValidationError(msg);
-    }
-    return expanded;
+	if (expanded.length === 0) {
+		const msg = fullAcl
+			? `${fullAcl} is not a valid acl`
+			: `${module} or ${permission} are not valid`;
+		throw new ValidationError(msg);
+	}
+	return expanded;
 }
 
 /**
@@ -144,30 +152,34 @@ function decomposeWildcard(module: string, permission: string, fullAcl?: string)
  * @param permission The permission relating to the module
  * @returns A string array
  */
-function validateCompetencyAcl(module: string, permission: string, fullAcl: string): string[] {
-    let aclList: string[] = [];
+function validateCompetencyAcl(
+	module: string,
+	permission: string,
+	fullAcl: string
+): string[] {
+	let aclList: string[] = [];
 
-    if (permission.includes("*")) {
-        aclList = aclList.concat(decomposeWildcard(module, permission));
-        return aclList;
-    }
+	if (permission.includes("*")) {
+		aclList = aclList.concat(decomposeWildcard(module, permission));
+		return aclList;
+	}
 
-    Object.entries(competencyAcl).forEach((compAcl) => {
-        const moduleName = compAcl[0];
-        if (moduleName === module) {
-            Object.entries(compAcl[1]).forEach((keyPair) => {
-                if(keyPair[0] === permission) {
-                    aclList.push(keyPair[1]);
-                }
-            });
-        }
-    });
+	Object.entries(competencyAcl).forEach((compAcl) => {
+		const moduleName = compAcl[0];
+		if (moduleName === module) {
+			Object.entries(compAcl[1]).forEach((keyPair) => {
+				if (keyPair[0] === permission) {
+					aclList.push(keyPair[1]);
+				}
+			});
+		}
+	});
 
-    if (aclList.length === 0) {
-        throw new ValidationError(`${fullAcl} is not a valid acl.`);
-    }
+	if (aclList.length === 0) {
+		throw new ValidationError(`${fullAcl} is not a valid acl.`);
+	}
 
-    return aclList;
+	return aclList;
 }
 
 /**
@@ -176,5 +188,5 @@ function validateCompetencyAcl(module: string, permission: string, fullAcl: stri
  * @returns An acl with potential duplicates removed
  */
 function removeDuplicateAcls(acl: string[]): string[] {
-    return acl.length !== 0 ? Array.from(new Set(acl)) : [];
+	return acl.length !== 0 ? Array.from(new Set(acl)) : [];
 }

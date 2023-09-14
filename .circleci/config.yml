@@ -14,6 +14,9 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Remove Prepare Script
+          command: npm pkg delete scripts.prepare
+      - run:
           name: Install dependencies
           command: npm install --ignore-scripts
       - run:

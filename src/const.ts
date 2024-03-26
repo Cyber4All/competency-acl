@@ -7,6 +7,7 @@ enum SERVICES {
 
 enum MODULES {
 	competencies = "competencies",
+	name = "name",
 	actor = "actor",
 	condition = "condition",
 	documentation = "documentation",
@@ -33,6 +34,11 @@ export const competencyAcl = {
 		reviewSubmitted: `${SERVICES.competency}:${MODULES.competencies}:reviewSubmitted`,
 		create: `${SERVICES.competency}:${MODULES.competencies}:create`,
 		version: `${SERVICES.competency}:${MODULES.competencies}:version`,
+	},
+	name: {
+		wildcard: `${SERVICES.competency}:${MODULES.name}:*`,
+		updateDraft: `${SERVICES.competency}:${MODULES.name}:updateDraft`,
+		updateSubmitted: `${SERVICES.competency}:${MODULES.name}:updateSubmitted`,
 	},
 	actor: {
 		wildcard: `${SERVICES.competency}:${MODULES.actor}:*`,
@@ -108,6 +114,7 @@ export const basic_user_permissions = [
 	competencyAcl.competencies.getWildcard,
 	competencyAcl.competencies.deleteDraft,
 	competencyAcl.competencies.create,
+	competencyAcl.name.updateDraft,
 	competencyAcl.actor.updateDraft,
 	competencyAcl.condition.updateDraft,
 	competencyAcl.documentation.uploadDraft,
@@ -135,6 +142,7 @@ export const ADMIN_EDITOR = [
 	competencyAcl.lifecycle.approve,
 	competencyAcl.lifecycle.reject,
 	competencyAcl.lifecycle.deprecate,
+	competencyAcl.name.updateSubmitted,
 	competencyAcl.actor.updateSubmitted,
 	competencyAcl.behavior.updateSubmitted,
 	competencyAcl.condition.updateSubmitted,

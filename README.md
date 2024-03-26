@@ -91,6 +91,14 @@ In the current version of the competency api, there are no microservices. Which 
 | competency:competencies:create | Create a competency |
 | competency:competencies:version | Version a competency |
 
+### Name Module
+
+| Action | Description |
+| ------ | ----------- |
+| competency:name:* | Wilcard for the name field of a competency |
+| competency:name:updateDraft | Update the name field of a draft competency |
+| competency:name:updateSubmitted | Update the name field of a submitted competency |
+
 ### Actor Module
 
 | Action | Description |

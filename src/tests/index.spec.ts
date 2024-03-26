@@ -75,6 +75,14 @@ describe("Validate Valid Acls", () => {
 			])
 		);
 	});
+	it(`Should return an array for ${competencyAcl.name.wildcard}`, () => {
+		expect(new Set(validateAcl(competencyAcl.name.wildcard))).toEqual(
+			new Set([
+				competencyAcl.name.updateDraft,
+				competencyAcl.name.updateSubmitted,
+			])
+		);
+	});
 	it(`Should return an array for ${competencyAcl.competencies.wildcard}`, () => {
 		expect(new Set(validateAcl(competencyAcl.competencies.wildcard))).toEqual(
 			new Set(competencyWildcard)
@@ -111,6 +119,7 @@ describe("Validate Arrays of Acls", () => {
 		const aclArray = [
 			competencyAcl.competencies.getWildcard,
 			competencyAcl.actor.wildcard,
+			competencyAcl.name.wildcard,
 			competencyAcl.condition.updateDraft,
 			competencyAcl.search.rejected,
 		];
@@ -119,6 +128,8 @@ describe("Validate Arrays of Acls", () => {
 				competencyGetWildcard.concat([
 					competencyAcl.actor.updateDraft,
 					competencyAcl.actor.updateSubmitted,
+					competencyAcl.name.updateDraft,
+					competencyAcl.name.updateSubmitted,
 					competencyAcl.condition.updateDraft,
 					competencyAcl.search.rejected,
 				])

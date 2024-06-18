@@ -62,10 +62,3 @@ workflows:
           filters:
             branches:
               only: /releases/
-      - cyber4all/sbom:
-          context: [Shortcut]
-          language: node
-          filters:
-            branches:
-              only:
-                - releases

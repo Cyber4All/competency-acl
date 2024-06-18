@@ -158,4 +158,6 @@ export const ADMIN_EDITOR = [
 	competencyAcl.degree.updateSubmitted,
 	competencyAcl.employability.updateSubmitted,
 	competencyAcl.notes.updateSubmitted,
+	competencyAcl.name.updateSubmitted,
+	competencyAcl.activity.updateSubmitted
 ];

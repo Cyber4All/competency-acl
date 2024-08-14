@@ -74,6 +74,7 @@ describe("Validate Valid Acls", () => {
 			new Set([
 				competencyAcl.actor.updateDraft,
 				competencyAcl.actor.updateSubmitted,
+				competencyAcl.actor.updateChangesRequested
 			])
 		);
 	});
@@ -82,6 +83,7 @@ describe("Validate Valid Acls", () => {
 			new Set([
 				competencyAcl.name.updateDraft,
 				competencyAcl.name.updateSubmitted,
+				competencyAcl.name.updateChangesRequested
 			])
 		);
 	});
@@ -130,8 +132,10 @@ describe("Validate Arrays of Acls", () => {
 				competencyGetWildcard.concat([
 					competencyAcl.actor.updateDraft,
 					competencyAcl.actor.updateSubmitted,
+					competencyAcl.actor.updateChangesRequested,
 					competencyAcl.name.updateDraft,
 					competencyAcl.name.updateSubmitted,
+					competencyAcl.name.updateChangesRequested,
 					competencyAcl.condition.updateDraft,
 					competencyAcl.search.rejected,
 				])

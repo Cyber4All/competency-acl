@@ -175,8 +175,10 @@ describe("Condense an Array of Acls", () => {
 			competencyAcl.apiKey.updateAcl,
 			competencyAcl.actor.updateDraft,
 			competencyAcl.actor.updateSubmitted,
+			competencyAcl.actor.updateChangesRequested,
 			competencyAcl.behavior.updateDraft,
 			competencyAcl.behavior.updateSubmitted,
+			competencyAcl.behavior.updateChangesRequested
 		];
 		correctArray = [
 			competencyAcl.apiKey.wildcard,

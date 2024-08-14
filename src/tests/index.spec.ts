@@ -21,6 +21,7 @@ const competencyWildcard = [
 	competencyAcl.competencies.getDraft,
 	competencyAcl.competencies.version,
 	competencyAcl.competencies.reviewSubmitted,
+	competencyAcl.competencies.getChangesRequested,
 ];
 
 const competencyGetWildcard = [
@@ -29,6 +30,7 @@ const competencyGetWildcard = [
 	competencyAcl.competencies.getRejected,
 	competencyAcl.competencies.getSubmitted,
 	competencyAcl.competencies.getDraft,
+	competencyAcl.competencies.getChangesRequested
 ];
 
 describe("Validate Invalid Acls", () => {

@@ -32,7 +32,7 @@ export const competencyAcl = {
 		getPublished: `${SERVICES.competency}:${MODULES.competencies}:getPublished`,
 		getDeprecated: `${SERVICES.competency}:${MODULES.competencies}:getDeprecated`,
 		deleteDraft: `${SERVICES.competency}:${MODULES.competencies}:deleteDraft`,
-		getChangesRequested: `${SERVICES.competency}:${MODULES.competencies}:changesRequested`,
+		getChangesRequested: `${SERVICES.competency}:${MODULES.competencies}:getChangesRequested`,
 		reviewSubmitted: `${SERVICES.competency}:${MODULES.competencies}:reviewSubmitted`,
 		create: `${SERVICES.competency}:${MODULES.competencies}:create`,
 		version: `${SERVICES.competency}:${MODULES.competencies}:version`,

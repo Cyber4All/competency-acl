@@ -21,6 +21,7 @@ const competencyWildcard = [
 	competencyAcl.competencies.getDraft,
 	competencyAcl.competencies.version,
 	competencyAcl.competencies.reviewSubmitted,
+	competencyAcl.competencies.getChangesRequested,
 ];
 
 const competencyGetWildcard = [
@@ -29,6 +30,7 @@ const competencyGetWildcard = [
 	competencyAcl.competencies.getRejected,
 	competencyAcl.competencies.getSubmitted,
 	competencyAcl.competencies.getDraft,
+	competencyAcl.competencies.getChangesRequested
 ];
 
 describe("Validate Invalid Acls", () => {
@@ -72,6 +74,7 @@ describe("Validate Valid Acls", () => {
 			new Set([
 				competencyAcl.actor.updateDraft,
 				competencyAcl.actor.updateSubmitted,
+				competencyAcl.actor.updateChangesRequested
 			])
 		);
 	});
@@ -80,6 +83,7 @@ describe("Validate Valid Acls", () => {
 			new Set([
 				competencyAcl.name.updateDraft,
 				competencyAcl.name.updateSubmitted,
+				competencyAcl.name.updateChangesRequested
 			])
 		);
 	});
@@ -128,8 +132,10 @@ describe("Validate Arrays of Acls", () => {
 				competencyGetWildcard.concat([
 					competencyAcl.actor.updateDraft,
 					competencyAcl.actor.updateSubmitted,
+					competencyAcl.actor.updateChangesRequested,
 					competencyAcl.name.updateDraft,
 					competencyAcl.name.updateSubmitted,
+					competencyAcl.name.updateChangesRequested,
 					competencyAcl.condition.updateDraft,
 					competencyAcl.search.rejected,
 				])
@@ -169,8 +175,10 @@ describe("Condense an Array of Acls", () => {
 			competencyAcl.apiKey.updateAcl,
 			competencyAcl.actor.updateDraft,
 			competencyAcl.actor.updateSubmitted,
+			competencyAcl.actor.updateChangesRequested,
 			competencyAcl.behavior.updateDraft,
 			competencyAcl.behavior.updateSubmitted,
+			competencyAcl.behavior.updateChangesRequested
 		];
 		correctArray = [
 			competencyAcl.apiKey.wildcard,

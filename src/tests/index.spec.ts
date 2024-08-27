@@ -16,7 +16,7 @@ const competencyWildcard = [
 	competencyAcl.competencies.deleteDraft,
 	competencyAcl.competencies.getDeprecated,
 	competencyAcl.competencies.getPublished,
-	competencyAcl.competencies.getRejected,
+	competencyAcl.competencies.getDeclined,
 	competencyAcl.competencies.getSubmitted,
 	competencyAcl.competencies.getDraft,
 	competencyAcl.competencies.version,
@@ -27,7 +27,7 @@ const competencyWildcard = [
 const competencyGetWildcard = [
 	competencyAcl.competencies.getDeprecated,
 	competencyAcl.competencies.getPublished,
-	competencyAcl.competencies.getRejected,
+	competencyAcl.competencies.getDeclined,
 	competencyAcl.competencies.getSubmitted,
 	competencyAcl.competencies.getDraft,
 	competencyAcl.competencies.getChangesRequested
@@ -125,7 +125,7 @@ describe("Validate Arrays of Acls", () => {
 			competencyAcl.actor.wildcard,
 			competencyAcl.name.wildcard,
 			competencyAcl.condition.updateDraft,
-			competencyAcl.search.rejected,
+			competencyAcl.search.declined,
 		];
 		expect(new Set(validateAclArray(aclArray))).toEqual(
 			new Set(
@@ -137,7 +137,7 @@ describe("Validate Arrays of Acls", () => {
 					competencyAcl.name.updateSubmitted,
 					competencyAcl.name.updateChangesRequested,
 					competencyAcl.condition.updateDraft,
-					competencyAcl.search.rejected,
+					competencyAcl.search.declined,
 				])
 			)
 		);

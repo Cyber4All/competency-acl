@@ -28,7 +28,7 @@ export const competencyAcl = {
 		getWildcard: `${SERVICES.competency}:${MODULES.competencies}:get*`,
 		getDraft: `${SERVICES.competency}:${MODULES.competencies}:getDraft`,
 		getSubmitted: `${SERVICES.competency}:${MODULES.competencies}:getSubmitted`,
-		getRejected: `${SERVICES.competency}:${MODULES.competencies}:getRejected`,
+		getDeclined: `${SERVICES.competency}:${MODULES.competencies}:getDeclined`,
 		getPublished: `${SERVICES.competency}:${MODULES.competencies}:getPublished`,
 		getDeprecated: `${SERVICES.competency}:${MODULES.competencies}:getDeprecated`,
 		deleteDraft: `${SERVICES.competency}:${MODULES.competencies}:deleteDraft`,
@@ -110,7 +110,7 @@ export const competencyAcl = {
 	search: {
 		wildcard: `${SERVICES.competency}:${MODULES.search}:*`,
 		published: `${SERVICES.competency}:${MODULES.search}:published`,
-		rejected: `${SERVICES.competency}:${MODULES.search}:rejected`,
+		declined: `${SERVICES.competency}:${MODULES.search}:declined`,
 		submitted: `${SERVICES.competency}:${MODULES.search}:submitted`,
 		draft: `${SERVICES.competency}:${MODULES.search}:draft`,
 		deprecated: `${SERVICES.competency}:${MODULES.search}:deprecated`,
@@ -121,10 +121,10 @@ export const competencyAcl = {
 		deprecate: `${SERVICES.competency}:${MODULES.lifecycle}:deprecate`,
 		submit: `${SERVICES.competency}:${MODULES.lifecycle}:submit`,
 		cancelSubmission: `${SERVICES.competency}:${MODULES.lifecycle}:cancelSubmission`,
-		reject: `${SERVICES.competency}:${MODULES.lifecycle}:reject`,
+		decline: `${SERVICES.competency}:${MODULES.lifecycle}:decline`,
 		approve: `${SERVICES.competency}:${MODULES.lifecycle}:approve`,
 		changesRequested: `${SERVICES.competency}:${MODULES.lifecycle}:changesRequested`,
-		reviseRejected: `${SERVICES.competency}:${MODULES.lifecycle}:reviseRejected`,
+		reviseDeclined: `${SERVICES.competency}:${MODULES.lifecycle}:reviseDeclined`,
 		reviseChangesRequested: `${SERVICES.competency}:${MODULES.lifecycle}:reviseChangesRequested`
 	},
 };
@@ -163,7 +163,7 @@ export const basic_user_permissions = [
 export const ADMIN_VIEWER = [
 	competencyAcl.competencies.reviewSubmitted,
 	competencyAcl.lifecycle.approve,
-	competencyAcl.lifecycle.reject,
+	competencyAcl.lifecycle.decline,
 	competencyAcl.lifecycle.deprecate,
 	competencyAcl.lifecycle.reviseChangesRequested
 ];
@@ -171,7 +171,7 @@ export const ADMIN_VIEWER = [
 export const ADMIN_EDITOR = [
 	competencyAcl.competencies.reviewSubmitted,
 	competencyAcl.lifecycle.approve,
-	competencyAcl.lifecycle.reject,
+	competencyAcl.lifecycle.decline,
 	competencyAcl.lifecycle.deprecate,
 	competencyAcl.lifecycle.changesRequested,
 	competencyAcl.activity.updateSubmitted,

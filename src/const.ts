@@ -157,7 +157,8 @@ export const basic_user_permissions = [
 	competencyAcl.condition.updateChangesRequested,
 	competencyAcl.degree.updateChangesRequested,
 	competencyAcl.documentation.updateChangesRequested,
-	competencyAcl.notes.updateChangesRequested
+	competencyAcl.notes.updateChangesRequested,
+	competencyAcl.lifecycle.reviseRejected
 ];
 
 export const ADMIN_VIEWER = [

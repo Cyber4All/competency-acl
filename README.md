@@ -63,7 +63,7 @@ Ex:
 let expanded = [
     "competency:competencies:getDraft",
     "competency:competencies:getSubmitted",
-    "competency:competencies:getRejected",
+    "competency:competencies:getDeclined",
     "competency:competencies:getPublished",
     "competency:competencies:getDeprecated"
 ];
@@ -84,7 +84,7 @@ In the current version of the competency api, there are no microservices. Which 
 | competency:competencies:get* | Get Wildcard, Giving a user all get actions |
 | competency:competencies:getDraft | Get a competency draft |
 | competency:competencies:getSubmitted | Get a submitted competency |
-| competency:competencies:getRejected | Get a rejected competency |
+| competency:competencies:getDeclined | Get a declined competency |
 | competency:competencies:getPublised | Get a published competency |
 | competency:competencies:getDeprecated | Get a deprecated competency |
 | competency:competencies:deleteDraft | Delete a competency draft |
@@ -170,7 +170,7 @@ In the current version of the competency api, there are no microservices. Which 
 | ------ | ----------- |
 | competency:search:* | Wildcard for the Search module |
 | competency:search:published | Search for published competencies |
-| competency:search:rejected | Search for rejected competencies |
+| competency:search:declined | Search for declined competencies |
 | competency:search:submitted | Search for submitted competencies |
 | competency:search:draft | Search for draft competencies |
 | competency:search:deprecated | Search for deprecated competencies |
@@ -183,6 +183,6 @@ In the current version of the competency api, there are no microservices. Which 
 | competency:lifecycle:deprecate | Deprecate a competency |
 | competency:lifecycle:submit | Submit a competency |
 | competency:lifecycle:cancelSubmission | Cancel the submission of a competency |
-| competency:lifecycle:reject | Reject the submission of a competency |
+| competency:lifecycle:decline | Decline the submission of a competency |
 | competency:lifecycle:approve | Approve the submission of a competency |
-| competency:lifecycle:reviseRejected | Revise a rejected competency |
+| competency:lifecycle:reviseDeclined | Revise a declined competency |

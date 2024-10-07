@@ -1,18 +1,41 @@
 import { ACL_REGEX, competencyAcl } from "./const";
-import { ValidationError } from "./error";
+import { ActionMismatchError, ActionNotSupportedError, ServiceNotSupportedError } from "./error";
+
+export interface ValidationOptions {
+	/**
+	 * If set to true, the function will throw an error if the acl is invalid
+	 */
+	throwOnError?: boolean;
+}
+
+/**
+ * Default options for the validateAclArray function
+ */
+const defaultValidationOptions: ValidationOptions = {
+	throwOnError: true,
+};
 
 /**
  * Validate an Array of acls by ensuring each acl matches the regex and is a valid action.
  * The returned array will contain all duplicates removed and all wilcard acls expanded
  * @param acl A list of acls
+ * @param options Options for the validation
  * @returns An expanded list of acls
  */
-export function validateAclArray(acl: string[]): string[] {
+export function validateAclArray(acl: string[], options: ValidationOptions = defaultValidationOptions): string[] {
 	acl = removeDuplicateAcls(acl);
 	let fullAcl: string[] = [];
 	acl.forEach((anAcl) => {
-		const res = validateAcl(anAcl);
-		fullAcl = fullAcl.concat(res);
+		try {
+			const res = validateAcl(anAcl);
+			fullAcl = fullAcl.concat(res);
+		} catch (error) {
+			// If a user has many actions in the acl array, we don't want to throw an error for one being
+			// invalid. Rather, we want to just return the valid acls 
+			if (options.throwOnError) {
+				throw error;
+			}
+		}
 	});
 	return fullAcl;
 }
@@ -25,7 +48,7 @@ export function validateAclArray(acl: string[]): string[] {
  */
 export function validateAcl(acl: string): string[] {
 	if (acl.match(ACL_REGEX) === null) {
-		throw new ValidationError("The ACL string is not formatted correctly");
+		throw new ActionMismatchError("The ACL string is not formatted correctly");
 	}
 	const aclArray = acl.split(":");
 	const service = aclArray[0];
@@ -36,7 +59,7 @@ export function validateAcl(acl: string): string[] {
 		case "competency":
 			return validateCompetencyAcl(module, permission, acl);
 		default:
-			throw new ValidationError("Service does not exist");
+			throw new ServiceNotSupportedError("Service does not exist");
 	}
 }
 
@@ -106,7 +129,6 @@ export function condenseAcl(acl: string[]): string[] {
 function decomposeWildcard(
 	module: string,
 	permission: string,
-	fullAcl?: string
 ): string[] {
 	const expanded: string[] = [];
 
@@ -138,10 +160,7 @@ function decomposeWildcard(
 	}
 
 	if (expanded.length === 0) {
-		const msg = fullAcl
-			? `${fullAcl} is not a valid acl`
-			: `${module} or ${permission} are not valid`;
-		throw new ValidationError(msg);
+		throw new ActionNotSupportedError(`${module}:${permission} is not a valid action.`);
 	}
 	return expanded;
 }
@@ -167,6 +186,9 @@ function validateCompetencyAcl(
 	Object.entries(competencyAcl).forEach((compAcl) => {
 		const moduleName = compAcl[0];
 		if (moduleName === module) {
+			// TODO: This can be optimized by quick exiting the forEach once the permission is found.
+			// Currently it will continue to iterate through the rest of the permissions in the module
+			// even if the first permission checked is the correct one.
 			Object.entries(compAcl[1]).forEach((keyPair) => {
 				if (keyPair[0] === permission) {
 					aclList.push(keyPair[1]);
@@ -176,7 +198,7 @@ function validateCompetencyAcl(
 	});
 
 	if (aclList.length === 0) {
-		throw new ValidationError(`${fullAcl} is not a valid acl.`);
+		throw new ActionNotSupportedError(`${fullAcl} is not a valid acl.`);
 	}
 
 	return aclList;

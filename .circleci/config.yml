@@ -5,6 +5,9 @@ defaults: &defaults
   docker:
     - image: cimg/node:lts
 
+orbs:
+  cyber4all: cyber4all/orb@2.1.8
+
 jobs:
   build:
     <<: *defaults
@@ -22,12 +25,14 @@ jobs:
       - run:
           name: Run tests
           command: npm test
+      - store_test_results:
+          path: ./reports/junit.xml
       - persist_to_workspace:
           root: ./
           paths:
             - ./package.json
             - ./lib
-
+ 
   publish:
     <<: *defaults
     steps:
@@ -47,15 +52,21 @@ workflows:
           filters:
             branches:
               ignore: /releases/
+
   build-test-and-publish:
+    when:
+      equal: [releases, << pipeline.git.branch >>]
     jobs:
-      - build:
-          filters:
-            branches:
-              only: /releases/
+      - build
+   
+      - cyber4all/release:
+          requires:
+            - build
+          context: [Github]
+          tag: "$(jq -r '.version' package.json)"
+      
       - publish:
           requires:
             - build
-          filters:
-            branches:
-              only: /releases/
+            - cyber4all/release
+    

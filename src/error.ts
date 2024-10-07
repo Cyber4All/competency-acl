@@ -20,11 +20,17 @@ export interface ValidationErrorOptions {
  *
  * Base error class for the exceptions from the validation acl package.
  */
-export declare class ValidationError extends Error{
+export class ValidationError extends Error{
     readonly $fault: "client" | "server";
-	constructor(options: ValidationErrorOptions);
+	constructor(options: ValidationErrorOptions) {
+		super(options.message);
+		this.name = options.name;
+		this.$fault = options.$fault;
+	}
 }
 
+// The following example demonstrates why it is beneficial to use a custom error class 
+// rather than using the built-in Error class and check for the error name.
 // https://aws.amazon.com/blogs/developer/service-error-handling-modular-aws-sdk-js/
 
 /**

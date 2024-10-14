@@ -1,12 +1,25 @@
 {
-    "moduleFileExtensions": ["js", "json", "ts"],
-    "rootDir": "../",
-    "testRegex": "spec.ts$",
-    "transform": {
-      "^.+\\.(t|j)s$": "ts-jest"
-    },
-
-    "collectCoverage": true,
-    "clearMocks": true,
-    "coverageDirectory": "coverage"
-  } 
+  "moduleFileExtensions": [
+    "js",
+    "json",
+    "ts"
+  ],
+  "rootDir": "../",
+  "testRegex": "spec.ts$",
+  "transform": {
+    "^.+\\.(t|j)s$": "ts-jest"
+  },
+  "reporters": [
+    "default",
+    [
+      "jest-junit",
+      {
+        "outputDirectory": "reports",
+        "outputName": "junit.xml"
+      }
+    ]
+  ],
+  "collectCoverage": true,
+  "clearMocks": true,
+  "coverageDirectory": "coverage"
+}

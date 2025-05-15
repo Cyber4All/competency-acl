@@ -31,6 +31,7 @@ export const competencyAcl = {
 		getDeclined: `${SERVICES.competency}:${MODULES.competencies}:getDeclined`,
 		getPublished: `${SERVICES.competency}:${MODULES.competencies}:getPublished`,
 		getDeprecated: `${SERVICES.competency}:${MODULES.competencies}:getDeprecated`,
+		getPrivate:`${SERVICES.competency}:${MODULES.competencies}:getChangesRequested`,
 		deleteDraft: `${SERVICES.competency}:${MODULES.competencies}:deleteDraft`,
 		getChangesRequested: `${SERVICES.competency}:${MODULES.competencies}:getChangesRequested`,
 		reviewSubmitted: `${SERVICES.competency}:${MODULES.competencies}:reviewSubmitted`,
@@ -114,7 +115,8 @@ export const competencyAcl = {
 		submitted: `${SERVICES.competency}:${MODULES.search}:submitted`,
 		draft: `${SERVICES.competency}:${MODULES.search}:draft`,
 		deprecated: `${SERVICES.competency}:${MODULES.search}:deprecated`,
-		changesRequested: `${SERVICES.competency}:${MODULES.search}:changesRequested`
+		changesRequested: `${SERVICES.competency}:${MODULES.search}:changesRequested`,
+		private: `${SERVICES.competency}:${MODULES.search}:private`
 	},
 	lifecycle: {
 		wildcard: `${SERVICES.competency}:${MODULES.lifecycle}:wildcard`,
@@ -125,7 +127,8 @@ export const competencyAcl = {
 		approve: `${SERVICES.competency}:${MODULES.lifecycle}:approve`,
 		changesRequested: `${SERVICES.competency}:${MODULES.lifecycle}:changesRequested`,
 		reviseDeclined: `${SERVICES.competency}:${MODULES.lifecycle}:reviseDeclined`,
-		reviseChangesRequested: `${SERVICES.competency}:${MODULES.lifecycle}:reviseChangesRequested`
+		reviseChangesRequested: `${SERVICES.competency}:${MODULES.lifecycle}:reviseChangesRequested`,
+		privatize: `${SERVICES.competency}:${MODULES.lifecycle}:privatize`
 	},
 };
 
@@ -163,6 +166,7 @@ export const basic_user_permissions = [
 
 export const ADMIN_VIEWER = [
 	competencyAcl.competencies.reviewSubmitted,
+	competencyAcl.competencies.getPrivate,
 	competencyAcl.lifecycle.approve,
 	competencyAcl.lifecycle.decline,
 	competencyAcl.lifecycle.deprecate,
@@ -171,10 +175,12 @@ export const ADMIN_VIEWER = [
 
 export const ADMIN_EDITOR = [
 	competencyAcl.competencies.reviewSubmitted,
+	competencyAcl.competencies.getPrivate,
 	competencyAcl.lifecycle.approve,
 	competencyAcl.lifecycle.decline,
 	competencyAcl.lifecycle.deprecate,
 	competencyAcl.lifecycle.changesRequested,
+	competencyAcl.lifecycle.privatize,
 	competencyAcl.activity.updateSubmitted,
 	competencyAcl.name.updateSubmitted,
 	competencyAcl.actor.updateSubmitted,

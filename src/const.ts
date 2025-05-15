@@ -31,7 +31,7 @@ export const competencyAcl = {
 		getDeclined: `${SERVICES.competency}:${MODULES.competencies}:getDeclined`,
 		getPublished: `${SERVICES.competency}:${MODULES.competencies}:getPublished`,
 		getDeprecated: `${SERVICES.competency}:${MODULES.competencies}:getDeprecated`,
-		getPrivate:`${SERVICES.competency}:${MODULES.competencies}:getChangesRequested`,
+		getPrivate:`${SERVICES.competency}:${MODULES.competencies}:getPrivate`,
 		deleteDraft: `${SERVICES.competency}:${MODULES.competencies}:deleteDraft`,
 		getChangesRequested: `${SERVICES.competency}:${MODULES.competencies}:getChangesRequested`,
 		reviewSubmitted: `${SERVICES.competency}:${MODULES.competencies}:reviewSubmitted`,
